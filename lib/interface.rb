@@ -41,9 +41,22 @@
 # 3. Récupérer le cadeau entré par l'utilisateur et le sauvegarder dans une variable
 # 4. Supprimer le cadeau de la liste (gift_list)
 
+# STEP 3 - Mark an item as bought
+# - How do you modify your gift_list to store the status of each item?
+# gift_list devient un tableau (array) de hashes
+# - How does it affect your code?
+# Il faut changer :
+#   - la méthode display
+#   - comment ajouter un nouveau cadeau
+# MARK action - Pseudo-code
+
 require_relative 'christmas_list'
 
-gift_list = ['laptop', 'keyboard', 'smartphone', 'PS5']
+# gift_list = ['laptop', 'keyboard', 'smartphone', 'PS5'] # step 1 et 2
+gift_list = [
+  { name: "laptop", status: true },
+  { name: "keyboard", status: false }
+] # step 3
 
 puts 'Welcome to your Christmas gift list'
 user_choice = '' # or nil
