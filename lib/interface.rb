@@ -46,22 +46,37 @@
 # gift_list devient un tableau (array) de hashes
 # - How does it affect your code?
 # Il faut changer :
-#   - la méthode display
-#   - comment ajouter un nouveau cadeau
+#   - [x] la méthode display
+#   - [x] comment ajouter un nouveau cadeau
+
 # MARK action - Pseudo-code
+# 1. Afficher la liste des cadeaux (gift_list)
+# 2. Demander à l'utilisateur quel cadeau marquer comme acheté
+# 3. Récupérer l'index du cadeau entré par l'utilisateur et le sauvegarder dans une variable
+# 4. Changer la valeur du status du cadeau en true
+# 5. Afficher la liste des cadeaux (gift_list)
+
+# MARK action - Pseudo-code
+# 1. Afficher la liste des cadeaux (gift_list)
+# 2. Demander à l'utilisateur quel cadeau marquer comme acheté
+# 3. Récupérer l'index du cadeau entré par l'utilisateur et le sauvegarder dans une variable
+# 4. Changer la valeur du status du cadeau en true
+# 5. Afficher la liste des cadeaux (gift_list)
 
 require_relative 'christmas_list'
 
 # gift_list = ['laptop', 'keyboard', 'smartphone', 'PS5'] # step 1 et 2
 gift_list = [
   { name: "laptop", status: true },
-  { name: "keyboard", status: false }
+  { name: "keyboard", status: false },
+  { name: "smartphone", status: false },
+  { name: "PS5", status: false }
 ] # step 3
 
 puts 'Welcome to your Christmas gift list'
 user_choice = '' # or nil
 while user_choice != 'quit'
-  puts 'Which action [ list | add | delete | quit]?'
+  puts 'Which action [ list | add | delete | mark | quit]?'
   user_choice = gets.chomp
   case user_choice.downcase
   when 'list'
@@ -73,7 +88,10 @@ while user_choice != 'quit'
     if gift_list.include?(new_gift)
       puts 'already in list'
     else
-      gift_list << new_gift
+      # [{name: , status: }, ..., 'mouse']
+      # -> [{name: , status: }, ..., {name: 'mouse', status: false}]
+      gift_list << { name: new_gift, status: false } # step 3
+      # gift_list << new_gift # step 1 et 2
     end
     display(gift_list)
 
@@ -88,6 +106,29 @@ while user_choice != 'quit'
     else
       puts "#{gift_to_remove} doesn't exist"
     end
+
+  when 'mark'
+    display(gift_list)
+    puts 'Which gift do you want to un/mark? Give its index.'
+    gift_index = gets.chomp.to_i
+    # if gift_index > 0 && gift_index <= gift_list.size
+    if (1..gift_list.size).to_a.include?(gift_index)
+      gift_to_mark = gift_list[gift_index - 1]
+      if gift_list.include?(gift_to_mark)
+        gift_to_mark[:status] = !gift_to_mark[:status] # toggle
+        # if gift_to_mark[:status]
+        #   gift_to_mark[:status] = false
+        # else
+        #   gift_to_mark[:status] = true
+        # end
+        # or gift_list[gift_index - 1][:status] = true
+      else
+        puts "#{gift_to_mark} doesn't exist"
+      end
+    else
+      puts "Wrong choice. Try again."
+    end
+    display(gift_list)
 
   when 'quit'
     puts 'Goodbye'
