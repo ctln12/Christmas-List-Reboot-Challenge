@@ -31,9 +31,15 @@
 
 # ADD action - Pseudo-code
 # 1. Demander à l'utilisateur d'entrer un cadeau à rajouter à sa liste (gift_list)
-# 2. Récupérer le cadeau entré par l'utilisateur (et le sauvegarder dans une variable)
+# 2. Récupérer le cadeau entré par l'utilisateur et le sauvegarder dans une variable
 # 3. Ajouter le cadeau à la liste (gift_list) s'il n'existe pas déjà
 # 4. Afficher la gift_list modifiée
+
+# DELETE action - Pseudo-code
+# 1. Afficher la liste des cadeaux (gift_list)
+# 2. Demander à l'utilisateur quel cadeau supprimer
+# 3. Récupérer le cadeau entré par l'utilisateur et le sauvegarder dans une variable
+# 4. Supprimer le cadeau de la liste (gift_list)
 
 require_relative 'christmas_list'
 
@@ -59,8 +65,16 @@ while user_choice != 'quit'
     display(gift_list)
 
   when 'delete'
-    puts 'TODO: ask user the index of item to delete and delete it'
-    # Pseudo-code
+    display(gift_list)
+    puts 'Which gift do you want to delete? Give its index.'
+    gift_index = gets.chomp.to_i
+    gift_to_remove = gift_list[gift_index - 1]
+    if gift_list.include?(gift_to_remove)
+      gift_list.delete(gift_to_remove)
+      # or gift_index.delete_at(gift_index - 1)
+    else
+      puts "#{gift_to_remove} doesn't exist"
+    end
 
   when 'quit'
     puts 'Goodbye'
